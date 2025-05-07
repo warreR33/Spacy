@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zapper : MonoBehaviour
+public class Zapper : BaseWeapon
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Shoot()
     {
-        
-    }
+        Transform point = GetNextShootPoint();
+        if (point == null) return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameObject projectile = Instantiate(projectilePrefab, point.position, point.rotation);
+        PiercingProjectile proj = projectile.GetComponent<PiercingProjectile>();
+        if (proj != null)
+        {
+            proj.damage = damage;
+        }
     }
 }

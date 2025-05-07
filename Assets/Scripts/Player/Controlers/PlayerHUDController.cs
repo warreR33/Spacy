@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class PlayerHUDController : MonoBehaviour
@@ -22,6 +23,10 @@ public class PlayerHUDController : MonoBehaviour
     [Header("Shield Visuals")]
     public Image shieldHUD;
     public SpriteRenderer shieldVisual;
+
+    [Header("Ammo UI")]
+    public TextMeshProUGUI ammoText;
+    public Image reloadProgressCircle; 
 
     private List<Image> hearts = new List<Image>();
 
@@ -66,6 +71,31 @@ public class PlayerHUDController : MonoBehaviour
         if (shieldVisual != null)
             shieldVisual.enabled = active;
             
+    }
+
+    public void UpdateAmmoUI(int current, int max)
+    {
+        if (ammoText != null)
+        {
+            ammoText.text = $"{current}";
+        }
+    }
+
+    public void UpdateReloadUI(float timePassed, float totalTime)
+    {
+        if (reloadProgressCircle != null)
+        {
+            float fillAmount = Mathf.Clamp01(timePassed / totalTime);
+            reloadProgressCircle.fillAmount = fillAmount;
+        }
+    }
+
+    public void ResetReloadUI()
+    {
+        if (reloadProgressCircle != null)
+        {
+            reloadProgressCircle.fillAmount = 0f;
+        }
     }
 
 }
