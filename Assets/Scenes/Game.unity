@@ -1601,10 +1601,10 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
   - {fileID: 7988867924957658279, guid: f1466b51d9523f04d8b1a8c2f875f343, type: 3}
-  spawnInterval: 5
+  spawnInterval: 15
   minEnemiesPerWave: 4
   maxEnemiesPerWave: 10
-  formationType: 0
+  formationType: 4
 --- !u!4 &613195221
 Transform:
   m_ObjectHideFlags: 0
@@ -2382,7 +2382,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &904477360
 MonoBehaviour:
@@ -3677,7 +3677,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a6e12adf81643d24d8ab3204a0bc5e4c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e79756e358212f943992d81b9584f819, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
