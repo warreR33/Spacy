@@ -6,6 +6,8 @@ public class BaseEnemy : MonoBehaviour
 {
     public HealthSystem healthSystem;
 
+    public EnemySize size = EnemySize.Size1x1;
+
     [Header("Stats")]
     public int pointsOnDeath = 10;
     public float moveSpeed = 2f;
@@ -21,9 +23,6 @@ public class BaseEnemy : MonoBehaviour
     private Vector3 targetPosition;
     private bool isMoving = true;
 
-    [Header("Zone Management")]
-    public EnemyZoneManager.EnemyZone myZone;
-
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip damageClip;
@@ -31,6 +30,10 @@ public class BaseEnemy : MonoBehaviour
 
     [Header("Events")]
     public System.Action OnDeath;
+
+    [Header("Grid")]
+    private GridManager gridManager;
+    private List<Vector2Int> occupiedCells = new List<Vector2Int>();
 
     public SpriteRenderer render;
     public Collider2D enemyCollider;
@@ -80,13 +83,30 @@ public class BaseEnemy : MonoBehaviour
 
     void OnDestroy()
     {
-        if (myZone != null)
+        if (gridManager != null && occupiedCells != null)
         {
-            myZone.activeEnemies.Remove(gameObject);
-            if (myZone.activeEnemies.Count == 0)
+            foreach (var cell in occupiedCells)
             {
-                myZone.isOccupied = false;
-                Debug.Log($"Zona {myZone.name} liberada.");
+                gridManager.SetCellOccupied(cell.x, cell.y, false);
+                Debug.Log($"Celda {cell} liberada por {gameObject.name}");
+            }
+        }
+    }
+
+    public void AssignCells(GridManager grid, Vector2Int originCell)
+    {
+        gridManager = grid;
+        occupiedCells.Clear();
+
+        int width = (int)size.GetSize().x;
+        int height = (int)size.GetSize().y;
+
+        for (int dx = 0; dx < width; dx++)
+        {
+            for (int dy = 0; dy < height; dy++)
+            {
+                Vector2Int cell = new Vector2Int(originCell.x + dx, originCell.y + dy);
+                occupiedCells.Add(cell);
             }
         }
     }
@@ -120,5 +140,26 @@ public class BaseEnemy : MonoBehaviour
             Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         }
     }
+}
     
+public enum EnemySize
+{
+    Size1x1,
+    Size2x1,
+    Size1x2,
+    Size2x2
+}
+
+public static class EnemySizeExtensions
+{
+    public static Vector2 GetSize(this EnemySize size)
+    {
+        switch (size)
+        {
+            case EnemySize.Size2x1: return new Vector2(2, 1);
+            case EnemySize.Size1x2: return new Vector2(1, 2);
+            case EnemySize.Size2x2: return new Vector2(2, 2);
+            default: return new Vector2(1, 1);
+        }
+    }
 }
