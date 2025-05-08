@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LayerMode
+{
+    RepeatByCycle, 
+    RandomEachTime 
+}
+
+[System.Serializable]
+public class SpriteSet
+{
+    public Sprite[] sprites;
+}
+
 public class ParallaxLayer : MonoBehaviour
 {
-
-    public enum LayerMode
-    {
-        RepeatByCycle, 
-        RandomEachTime 
-    }
-
     public LayerMode mode = LayerMode.RepeatByCycle;
 
     public float scrollSpeed = 1f;
@@ -24,6 +29,39 @@ public class ParallaxLayer : MonoBehaviour
     private int recycleCount = 0;
     private int currentSpriteIndex = 0;
 
+    [Header("Nivelado")]
+    public List<SpriteSet> levelSprites = new List<SpriteSet>();
+
+
+    private void OnEnable()
+    {
+        if (GameProgressManager.Instance != null){ 
+            GameProgressManager.Instance.OnLevelChanged += OnLevelChanged;}
+       
+    }
+
+    private void OnDisable()
+    {
+        if (GameProgressManager.Instance != null){
+            GameProgressManager.Instance.OnLevelChanged -= OnLevelChanged;}
+            
+    }
+
+    void OnLevelChanged(int newLevel)
+    {
+        if (newLevel < levelSprites.Count){
+        spriteVariants = levelSprites[newLevel].sprites;}
+
+        foreach (Transform part in parts)
+        {
+            if (mode == LayerMode.RandomEachTime)
+                AssignRandomSprite(part);
+            else
+                ChangeToNextSprite(part);
+        }
+            
+    }
+
     void Start()
     {
         SpriteRenderer sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -35,7 +73,6 @@ public class ParallaxLayer : MonoBehaviour
             parts[i] = transform.GetChild(i);
         }
 
-        // Si estás en modo RandomEachTime, inicializa con sprites aleatorios
         if (mode == LayerMode.RandomEachTime)
         {
             foreach (Transform part in parts)
@@ -51,7 +88,6 @@ public class ParallaxLayer : MonoBehaviour
         {
             part.Translate(Vector3.down * scrollSpeed * Time.deltaTime);
 
-            // Verificamos si el sprite está totalmente fuera de la cámara antes de reposicionarlo
             float cameraBottom = Camera.main.transform.position.y - Camera.main.orthographicSize;
             float spriteBottom = part.position.y + spriteHeight / 2f;
 

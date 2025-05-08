@@ -44,6 +44,7 @@ public class Points : MonoBehaviour
     {
         score += amount;
         UpdateScoreUI();
+        GameProgressManager.Instance?.CheckProgress(score);
     }
 
     void UpdateScoreUI()
