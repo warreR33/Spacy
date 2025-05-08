@@ -339,7 +339,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSystem: {fileID: 7698594265405275945}
-  size: 0
+  size:
+    width: 1
+    height: 1
   pointsOnDeath: 10
   moveSpeed: 2
   firePoints:
@@ -347,8 +349,8 @@ MonoBehaviour:
   - {fileID: 241066811567356482}
   canShoot: 0
   projectilePrefab: {fileID: 5111104263722431362, guid: c90b8319b787e9d458c10781feb3d6a7, type: 3}
-  shootInterval: 3
-  fireFromAllPoints: 0
+  shootInterval: 2
+  fireAllAtOnce: 0
   audioSource: {fileID: 6045620735443289121}
   damageClip: {fileID: 8300000, guid: 717911573bfaa594ab2e0bd0c75687fb, type: 3}
   deathClip: {fileID: 8300000, guid: 4cc54840550980541ae4f391723132fc, type: 3}
@@ -368,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b377dc89e024899408245ff67ba97b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 4
   shieldActive: 0
   shieldCharge: 0
   maxShieldCharge: 0

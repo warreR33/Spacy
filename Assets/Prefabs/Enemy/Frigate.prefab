@@ -287,7 +287,7 @@ MonoBehaviour:
   size:
     width: 1
     height: 2
-  pointsOnDeath: 40
+  pointsOnDeath: 20
   moveSpeed: 1.5
   firePoints:
   - {fileID: 4285103387409844126}

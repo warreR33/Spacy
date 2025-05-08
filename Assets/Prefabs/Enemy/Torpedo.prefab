@@ -289,7 +289,7 @@ MonoBehaviour:
   size:
     width: 2
     height: 1
-  pointsOnDeath: 40
+  pointsOnDeath: 15
   moveSpeed: 1.5
   firePoints:
   - {fileID: 4285103387409844126}
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b377dc89e024899408245ff67ba97b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 5
   shieldActive: 0
   shieldCharge: 0
   maxShieldCharge: 0

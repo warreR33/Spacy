@@ -1623,10 +1623,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 304796843}
   enemyPrefabs:
-  - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
+  - {fileID: 7988867924957658279, guid: 320b23895a312fc42ad89f1fd1360092, type: 3}
   spawnInterval: 15
-  minEnemiesPerWave: 1
-  maxEnemiesPerWave: 2
+  minEnemiesPerWave: 10
+  maxEnemiesPerWave: 15
   formationType: 4
 --- !u!4 &613195221
 Transform:
@@ -5201,10 +5201,10 @@ SceneRoots:
   - {fileID: 2047439414}
   - {fileID: 1207810192}
   - {fileID: 897178105}
+  - {fileID: 913757421}
   - {fileID: 904477362}
   - {fileID: 906746119}
   - {fileID: 737629707}
   - {fileID: 1275799479}
   - {fileID: 304796844}
   - {fileID: 613195221}
-  - {fileID: 913757421}
