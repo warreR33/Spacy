@@ -248,7 +248,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 4
-    functionName: CallDead
+    functionName: CallShoot
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

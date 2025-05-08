@@ -188,16 +188,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSystem: {fileID: 7698594265405275945}
-  size: 3
+  size:
+    width: 4
+    height: 4
   pointsOnDeath: 40
   moveSpeed: 1.5
   firePoints:
   - {fileID: 4285103387409844126}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   canShoot: 0
-  projectilePrefab: {fileID: 5111104263722431362, guid: df2e447008d4ac34795e091184e02063, type: 3}
+  projectilePrefab: {fileID: 5111104263722431362, guid: de909f2beed7728428d4413a7b332faf, type: 3}
   shootInterval: 5
   fireAllAtOnce: 0
   audioSource: {fileID: 6045620735443289121}

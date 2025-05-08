@@ -286,7 +286,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSystem: {fileID: 7698594265405275945}
-  size: 1
+  size:
+    width: 2
+    height: 1
   pointsOnDeath: 40
   moveSpeed: 1.5
   firePoints:

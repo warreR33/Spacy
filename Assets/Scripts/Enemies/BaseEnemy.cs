@@ -2,11 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct EnemySize
+{
+    public int width;
+    public int height;
+
+    public EnemySize(int w, int h)
+    {
+        width = w;
+        height = h;
+    }
+
+    public Vector2 GetSize() => new Vector2(width, height);
+}
+
 public class BaseEnemy : MonoBehaviour
 {
     public HealthSystem healthSystem;
 
-    public EnemySize size = EnemySize.Size1x1;
+    public EnemySize size = new EnemySize(1, 1);
 
     [Header("Stats")]
     public int pointsOnDeath = 10;
@@ -190,25 +205,4 @@ public class BaseEnemy : MonoBehaviour
     }
 }
 
-    
-public enum EnemySize
-{
-    Size1x1,
-    Size2x1,
-    Size1x2,
-    Size2x2
-}
 
-public static class EnemySizeExtensions
-{
-    public static Vector2 GetSize(this EnemySize size)
-    {
-        switch (size)
-        {
-            case EnemySize.Size2x1: return new Vector2(2, 1);
-            case EnemySize.Size1x2: return new Vector2(1, 2);
-            case EnemySize.Size2x2: return new Vector2(2, 2);
-            default: return new Vector2(1, 1);
-        }
-    }
-}

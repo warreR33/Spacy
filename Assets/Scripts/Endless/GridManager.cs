@@ -25,20 +25,11 @@ public class GridManager : MonoBehaviour
 
     public Vector2 GetGroupCenter(Vector2Int originCell, EnemySize size)
     {
-        int width = 1, height = 1;
-
-        switch (size)
-        {
-            case EnemySize.Size2x1: width = 2; break;
-            case EnemySize.Size1x2: height = 2; break;
-            case EnemySize.Size2x2: width = 2; height = 2; break;
-        }
-
         Vector2 bottomLeft = GetCellCenter(originCell.x, originCell.y) - new Vector2(cellSize / 2f, cellSize / 2f);
-        Vector2 topRight = bottomLeft + new Vector2(width * cellSize, height * cellSize);
+        Vector2 topRight = bottomLeft + new Vector2(size.width * cellSize, size.height * cellSize);
         return (bottomLeft + topRight) / 2f;
     }
-
+    
     public bool IsCellOccupied(int x, int y)
     {
         return occupiedCells[x, y];
@@ -85,19 +76,10 @@ public class GridManager : MonoBehaviour
 
     public List<Vector2Int> GetOccupiedCells(Vector2Int origin, EnemySize size)
     {
-        int width = 1, height = 1;
-
-        switch (size)
-        {
-            case EnemySize.Size2x1: width = 2; break;
-            case EnemySize.Size1x2: height = 2; break;
-            case EnemySize.Size2x2: width = 2; height = 2; break;
-        }
-
         List<Vector2Int> cells = new List<Vector2Int>();
-        for (int dx = 0; dx < width; dx++)
+        for (int dx = 0; dx < size.width; dx++)
         {
-            for (int dy = 0; dy < height; dy++)
+            for (int dy = 0; dy < size.height; dy++)
             {
                 cells.Add(new Vector2Int(origin.x + dx, origin.y + dy));
             }
