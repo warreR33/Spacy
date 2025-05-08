@@ -13,11 +13,13 @@ public class BaseEnemy : MonoBehaviour
     public float moveSpeed = 2f;
 
     [Header("Shooting")]
+    public List<Transform> firePoints = new List<Transform>();
     public bool canShoot = false;
     public GameObject projectilePrefab;
-    public Transform firePoint;
     public float shootInterval = 2f;
     private float shootTimer;
+    public bool fireAllAtOnce  = false;
+    private int currentFirePointIndex = 0;
 
     [Header("Movement")]
     private Vector3 targetPosition;
@@ -35,8 +37,14 @@ public class BaseEnemy : MonoBehaviour
     private GridManager gridManager;
     private List<Vector2Int> occupiedCells = new List<Vector2Int>();
 
+    [Header("Animation")]
+    public Animator animator;
+    public Transform visualTransform;
+
     public SpriteRenderer render;
     public Collider2D enemyCollider;
+
+    private Coroutine damageFlashCoroutine;
 
     public void Initialize(Vector3 target, bool shoot = false)
     {
@@ -49,9 +57,14 @@ public class BaseEnemy : MonoBehaviour
     {
         healthSystem.OnHealthChanged += (current, max) =>
         {
-            if (!healthSystem.IsDead && current < max) 
+            if (!healthSystem.IsDead && current < max)
             {
-                audioSource.PlayOneShot(damageClip);        
+                if (damageFlashCoroutine != null)
+                    StopCoroutine(damageFlashCoroutine);
+                damageFlashCoroutine = StartCoroutine(FlashRed());
+
+                if (damageClip != null)
+                    audioSource.PlayOneShot(damageClip);
             }
         };
 
@@ -75,7 +88,7 @@ public class BaseEnemy : MonoBehaviour
             shootTimer += Time.deltaTime;
             if (shootTimer >= shootInterval)
             {
-                Shoot();
+                animator.SetTrigger("Shoot");
                 shootTimer = 0f;
             }
         }
@@ -88,7 +101,6 @@ public class BaseEnemy : MonoBehaviour
             foreach (var cell in occupiedCells)
             {
                 gridManager.SetCellOccupied(cell.x, cell.y, false);
-                Debug.Log($"Celda {cell} liberada por {gameObject.name}");
             }
         }
     }
@@ -115,32 +127,69 @@ public class BaseEnemy : MonoBehaviour
     {
         Points.Instance.AddPoints(pointsOnDeath);
         OnDeath?.Invoke();
-        StartCoroutine(DeathSequence());
+
+        if (enemyCollider != null) enemyCollider.enabled = false;
+
+        if (deathClip != null)
+            audioSource.PlayOneShot(deathClip);
+
+        if (animator != null)
+            animator.SetTrigger("Die");
+        else
+            Destroy(gameObject); 
     }
 
-    IEnumerator DeathSequence()
+    public void OnDeathAnimationFinished()
     {
-        if (enemyCollider != null) enemyCollider.enabled = false;
-        if (deathClip != null)
-        {
-            audioSource.PlayOneShot(deathClip);
-            Color originalColor = render.color;
-            render.color = Color.red;
-            yield return new WaitForSeconds(0.2f);
-            render.color = originalColor;
-            yield return new WaitForSeconds(0.2f);
-        }
         Destroy(gameObject);
     }
 
-    private void Shoot()
+    public void Shoot()
     {
-        if (projectilePrefab != null && firePoint != null)
+        if (projectilePrefab == null || firePoints.Count == 0) return;
+
+        if (fireAllAtOnce)
         {
-            Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            foreach (var firePoint in firePoints)
+            {
+                Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+            }
+        }
+        else
+        {
+            Transform firePoint = firePoints[currentFirePointIndex];
+            Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+            currentFirePointIndex = (currentFirePointIndex + 1) % firePoints.Count;
         }
     }
+
+    private IEnumerator FlashRed()
+    {
+        Color originalColor = render.color;
+        Vector3 originalLocalPos = visualTransform.localPosition;
+
+        float duration = 0.1f;
+        float elapsed = 0f;
+        float magnitude = 0.05f;
+
+        render.color = Color.red;
+
+        while (elapsed < duration)
+        {
+            float offsetX = Random.Range(-magnitude, magnitude);
+            float offsetY = Random.Range(-magnitude, magnitude);
+            visualTransform.localPosition = originalLocalPos + new Vector3(offsetX, offsetY, 0f);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        visualTransform.localPosition = originalLocalPos;
+        render.color = originalColor;
+    }
 }
+
     
 public enum EnemySize
 {

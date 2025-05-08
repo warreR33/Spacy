@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2777775715307551848}
   - component: {fileID: 4916226459925242969}
   m_Layer: 0
-  m_Name: Scout_Projectile
+  m_Name: 'Frigate_Projectile '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 1124442797
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: -855898831, guid: 13e8efe821bf6284fbdb4e8cc6dde645, type: 3}
+  m_Sprite: {fileID: -1968942447, guid: bc280223e237cc64aa167956642de18e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -149,7 +149,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.04
+  m_Radius: 0.06115365
 --- !u!95 &-2777775715307551848
 Animator:
   serializedVersion: 5
@@ -160,7 +160,7 @@ Animator:
   m_GameObject: {fileID: 5111104263722431362}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 726a4d109becfd34c90e8d0557f18c96, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2c2c2ed39939585458398490fe5ce940, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

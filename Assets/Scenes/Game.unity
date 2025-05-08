@@ -1592,104 +1592,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 176716782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &598411370
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 598411373}
-  - component: {fileID: 598411372}
-  - component: {fileID: 598411371}
-  m_Layer: 0
-  m_Name: Basura Espacial
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &598411371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598411370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 336efafbca5f91147bd28c2bedd480ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionSpeed: 5
---- !u!212 &598411372
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598411370}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 259293087
-  m_SortingLayer: 5
-  m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: aa3e4105ceea6fc4a8733b7f312b53d8, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 5.714286, y: 5.714286}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &598411373
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598411370}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0.18, z: 0}
-  m_LocalScale: {x: 1, y: 1.6471999, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &613195219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1603,7 @@ GameObject:
   - component: {fileID: 613195221}
   - component: {fileID: 613195220}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: ----EnemySpawner----
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1721,11 +1623,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 304796843}
   enemyPrefabs:
-  - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
-  - {fileID: 7988867924957658279, guid: f1466b51d9523f04d8b1a8c2f875f343, type: 3}
+  - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
   spawnInterval: 15
-  minEnemiesPerWave: 4
-  maxEnemiesPerWave: 10
+  minEnemiesPerWave: 1
+  maxEnemiesPerWave: 2
   formationType: 4
 --- !u!4 &613195221
 Transform:
@@ -1949,7 +1850,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1124442797
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: -1726509959, guid: 3f23c6738b0049a43bf2645ac4e0f403, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.32941177}
@@ -2443,7 +2344,7 @@ GameObject:
   - component: {fileID: 897178105}
   - component: {fileID: 897178104}
   m_Layer: 0
-  m_Name: SpawnAsteroids
+  m_Name: --SpawnAsteroids--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3016,7 +2917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4bc31cd9c5eb1a4c91faeabc63bc78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transition: {fileID: 598411371}
+  transition: {fileID: 0}
   currentState: 0
   currentLevel: 0
   pointsPerLevel: 500
@@ -3566,7 +3467,7 @@ GameObject:
   - component: {fileID: 1207810189}
   - component: {fileID: 1207810188}
   m_Layer: 0
-  m_Name: Scene colliders
+  m_Name: ///Scene colliders\\\
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3867,7 +3768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1275799478
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5265,7 +5166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8508914489259378449, guid: 7547b1661fa7dc4458cebcd1ef8b531f, type: 3}
       propertyPath: damage
-      value: 80
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8508914489259378449, guid: 7547b1661fa7dc4458cebcd1ef8b531f, type: 3}
       propertyPath: cooldown
@@ -5307,4 +5208,3 @@ SceneRoots:
   - {fileID: 304796844}
   - {fileID: 613195221}
   - {fileID: 913757421}
-  - {fileID: 598411373}
