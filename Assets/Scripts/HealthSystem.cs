@@ -91,6 +91,25 @@ public class HealthSystem : MonoBehaviour
         OnShieldChanged?.Invoke(shieldCharge, maxShieldCharge, shieldActive);
     }
 
+    public void SetMaxHealth(int newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+
+    public void SetShieldRechargeRate(float newRate)
+    {
+        shieldRechargeRate = newRate;
+    }
+
+    public void SetMaxShieldCharge(float newMax)
+    {
+        maxShieldCharge = newMax;
+        shieldCharge = Mathf.Min(shieldCharge, maxShieldCharge);
+        OnShieldChanged?.Invoke(shieldCharge, maxShieldCharge, shieldActive);
+    }
+
     private void Die()
     {
         IsDead = true;

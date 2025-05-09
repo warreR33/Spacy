@@ -5,21 +5,45 @@ using UnityEngine.InputSystem;
 
 public class ShipMovement : MonoBehaviour
 {
+
+    public static event System.Action OnShipMoved;
+    private Vector2 previousPosition;
+
+
     [SerializeField] private float moveSpeed = 10f;
     private Vector3 targetPosition;
     private Camera mainCamera;
     private Rigidbody2D rb;
+    private Vector2 dragDirection;
     
     private PlayerInputActions inputActions;
     private bool isTouching = false;
 
-    public BaseWeapon[] weaponSlots = new BaseWeapon[2];
+    private Vector2 lastTouchPosition;
+    private float dragThreshold = 15f;
+    private float dragSensitivity = 0.05f;
+
+    [SerializeField] private Transform startPosition;
+
 
     private void Awake()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         inputActions = new PlayerInputActions();
+    }
+
+    private void Start()
+    {
+        if (startPosition != null)
+        {
+            transform.position = startPosition.position;
+            targetPosition = startPosition.position;
+        }
+        else
+        {
+            targetPosition = transform.position;
+        }
     }
 
     private void OnEnable()
@@ -41,59 +65,60 @@ public class ShipMovement : MonoBehaviour
     private void OnTouchStart(InputAction.CallbackContext context)
     {
         isTouching = true;
+        lastTouchPosition = context.ReadValue<Vector2>();
     }
 
     private void OnTouchMove(InputAction.CallbackContext context)
     {
-        if (isTouching)
+        if (!isTouching) return;
+
+        Vector2 currentTouch = context.ReadValue<Vector2>();
+        Vector2 delta = currentTouch - lastTouchPosition;
+
+        if (delta.magnitude > dragThreshold)
         {
-            Vector2 screenPosition = context.ReadValue<Vector2>();
-            Vector3 worldPos = mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0));
-            worldPos.z = 0;
-            targetPosition = worldPos;
+            dragDirection = delta * dragSensitivity;
+            lastTouchPosition = currentTouch;
         }
     }
 
     private void OnTouchEnd(InputAction.CallbackContext context)
     {
         isTouching = false;
-        targetPosition = rb.position;
+        dragDirection = Vector2.zero;
     }
 
     private void FixedUpdate()
     {
         Vector2 inputDir = inputActions.Gameplay.Move.ReadValue<Vector2>();
-        
-        Vector2 movement = inputDir.normalized * moveSpeed;
-        rb.velocity = movement;
+        Vector2 movement;
 
+        // Movimiento con teclas
         if (inputDir != Vector2.zero)
         {
-            targetPosition = rb.position + inputDir * moveSpeed * Time.fixedDeltaTime;
+            movement = inputDir.normalized * moveSpeed;
+            dragDirection = Vector2.zero; 
         }
-
-        Vector2 newPos = Vector2.Lerp(rb.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
-        rb.MovePosition(newPos);
-
-        foreach (BaseWeapon weapon in weaponSlots)
+        // Movimiento por arrastre
+        else if (isTouching && dragDirection != Vector2.zero)
         {
-            if (weapon != null)
-                weapon.UpdateWeapon();
+            movement = dragDirection * moveSpeed;
         }
-    }
-
-    public bool EquipWeapon(BaseWeapon newWeapon)
-    {
-        for (int i = 0; i < weaponSlots.Length; i++)
+        else
         {
-            if (weaponSlots[i] == null)
-            {
-                weaponSlots[i] = newWeapon;
-                newWeapon.transform.SetParent(transform);
-                newWeapon.transform.localPosition = Vector3.zero;
-                return true;
-            }
+            movement = Vector2.zero;
         }
-        return false;
+
+        // Suavizado de movimiento (si hay algún movimiento)
+        Vector2 targetVelocity = movement;
+        rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, Time.fixedDeltaTime * 10f);
+
+        // Verificar si la nave se movió
+        if ((Vector2)transform.position != previousPosition)
+        {
+            previousPosition = transform.position;
+            OnShipMoved?.Invoke();
+        }
+
     }
 }

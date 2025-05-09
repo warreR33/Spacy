@@ -32,6 +32,9 @@ public class Points : MonoBehaviour
 
     void Update()
     {
+        if (GameProgressManager.Instance != null && GameProgressManager.Instance.isInTutorial)
+        return;
+
         timer += Time.deltaTime;
         if (timer >= 1f)
         {

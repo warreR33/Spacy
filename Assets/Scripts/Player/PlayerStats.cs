@@ -12,6 +12,9 @@ public class PlayerStats : MonoBehaviour
     public PlayerHUDController hud;
     public PlayerAudioController audioController;
     public ShipMovement movementScript;
+    public ShipEquipmentController shipEquipment;
+
+    public static event System.Action OnPlayerDeath;
 
     private int lastHealth = -1;
 
@@ -21,6 +24,7 @@ public class PlayerStats : MonoBehaviour
         healthSystem.OnShieldChanged += UpdateShield;
         healthSystem.OnDeath += HandleDeath;
     }
+
 
     private void UpdateHealth(int current, int max)
     {
@@ -42,6 +46,7 @@ public class PlayerStats : MonoBehaviour
 
     private void HandleDeath()
     {
+        OnPlayerDeath?.Invoke();
         movementScript.enabled = false;
         StartCoroutine(audioController.PlayDeathSequence(() =>
         {
@@ -62,4 +67,5 @@ public class PlayerStats : MonoBehaviour
 
         SceneLoader.LoadScene("Defeat");
     }
+
 }

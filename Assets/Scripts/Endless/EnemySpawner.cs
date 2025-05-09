@@ -16,12 +16,14 @@ public class EnemySpawner : MonoBehaviour
     [Header("Formation")]
     public FormationType formationType = FormationType.Random;
 
+    private Coroutine spawnCoroutine; 
+
     private void Start()
     {
-        StartCoroutine(SpawnWaves());
+        spawnCoroutine = StartCoroutine(SpawnWaves()); 
     }
 
-    IEnumerator SpawnWaves()
+    public IEnumerator SpawnWaves()
     {
         while (true)
         {
@@ -32,14 +34,14 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemyGroup()
     {
+        if (GameProgressManager.Instance == null || GameProgressManager.Instance.currentState != GameState.OnLevel)
+        return;
+
         int count = Random.Range(minEnemiesPerWave, maxEnemiesPerWave + 1);
         Vector2Int gridSize = new Vector2Int(gridManager.gridWidth, gridManager.gridHeight);
-        bool[,] occupied = gridManager.GetOccupiedArray(); 
-
-        FormationType formationType = (FormationType)Random.Range(0, System.Enum.GetValues(typeof(FormationType)).Length);
+        bool[,] occupied = gridManager.GetOccupiedArray();
 
         List<Vector2Int> spawnCells = SpawnPatterns.GetFormation(gridSize, occupied, formationType, count);
-    
 
         foreach (var cell in spawnCells)
         {
@@ -49,7 +51,6 @@ public class EnemySpawner : MonoBehaviour
 
             Vector2Int size = Vector2Int.RoundToInt(tempEnemy.size.GetSize());
 
-            
             if (!gridManager.AreCellsFree(cell, tempEnemy.size))
                 continue;
 
@@ -69,8 +70,7 @@ public class EnemySpawner : MonoBehaviour
 
     Vector2 GetOffScreenSpawnPosition()
     {
-        float offset = 5f; 
-
+        float offset = 5f;
         Vector3 camPos = Camera.main.transform.position;
         float camHeight = 2f * Camera.main.orthographicSize;
         float camWidth = camHeight * Camera.main.aspect;
@@ -95,24 +95,5 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return pos;
-    }
-
-
-    List<Vector2Int> GetFreeCells()
-    {
-        List<Vector2Int> result = new List<Vector2Int>();
-
-        for (int x = 0; x < gridManager.gridWidth; x++)
-        {
-            for (int y = 0; y < gridManager.gridHeight; y++)
-            {
-                if (!gridManager.IsCellOccupied(x, y))
-                {
-                    result.Add(new Vector2Int(x, y));
-                }
-            }
-        }
-
-        return result;
     }
 }

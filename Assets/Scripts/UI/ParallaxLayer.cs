@@ -33,12 +33,6 @@ public class ParallaxLayer : MonoBehaviour
     public List<SpriteSet> levelSprites = new List<SpriteSet>();
 
 
-    private void OnEnable()
-    {
-        Debug.Log($"{gameObject.name} OnEnable ejecutado");
-
-    }
-
     private void OnDisable()
     {
         if (GameProgressManager.Instance != null){

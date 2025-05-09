@@ -11,7 +11,7 @@ public class EnemyVisualEvents : MonoBehaviour
     }
 
     public void CallShoot(){
-        baseEnemy.Shoot(); 
+        baseEnemy.Shooting(); 
     }
 
     public void CallDead(){

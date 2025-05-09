@@ -159,7 +159,7 @@ public class BaseEnemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Shoot()
+    public void Shooting()
     {
         if (projectilePrefab == null || firePoints.Count == 0) return;
 
