@@ -47,7 +47,6 @@ public class LevelTransitionVisual : MonoBehaviour
             GameProgressManager.Instance.CompleteTransition();
         }
 
-        // Se desactiva cuando el sprite salió completamente de la pantalla
         if (topOfSprite <= bottomOfCamera)
         {
             isTransitioning = false;

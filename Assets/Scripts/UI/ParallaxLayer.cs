@@ -35,9 +35,8 @@ public class ParallaxLayer : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GameProgressManager.Instance != null){ 
-            GameProgressManager.Instance.OnLevelChanged += OnLevelChanged;}
-       
+        Debug.Log($"{gameObject.name} OnEnable ejecutado");
+
     }
 
     private void OnDisable()
@@ -49,6 +48,7 @@ public class ParallaxLayer : MonoBehaviour
 
     void OnLevelChanged(int newLevel)
     {
+
         if (newLevel < levelSprites.Count){
         spriteVariants = levelSprites[newLevel].sprites;}
 
@@ -66,6 +66,11 @@ public class ParallaxLayer : MonoBehaviour
     {
         SpriteRenderer sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         spriteHeight = sr.bounds.size.y;
+
+        if (GameProgressManager.Instance != null)
+        {
+            GameProgressManager.Instance.OnLevelChanged += OnLevelChanged;
+        }
 
         parts = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
@@ -124,7 +129,7 @@ public class ParallaxLayer : MonoBehaviour
         return highest;
     }
 
-     void ChangeToNextSprite(Transform part)
+    void ChangeToNextSprite(Transform part)
     {
         currentSpriteIndex = (currentSpriteIndex + 1) % spriteVariants.Length;
 

@@ -35,7 +35,8 @@ public class GameProgressManager : MonoBehaviour
         if (newLevel > currentLevel && currentState == GameState.OnLevel)
         {
             currentLevel = newLevel;
-            CompleteTransition(); 
+            StartTransition();
+            Debug.Log("Cambio de level");
         }
     }
 
