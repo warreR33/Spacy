@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
     public PlayerAudioController audioController;
     public ShipMovement movementScript;
     public ShipEquipmentController shipEquipment;
+    public GameObject defeatHUD;
 
     public static event System.Action OnPlayerDeath;
 
@@ -65,7 +66,35 @@ public class PlayerStats : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
+        int score = Points.Instance.score;
+        GameStats.LastScore = score;
+
+        var saveTask = CloudSaveSystem.SaveScoreAsync(score);
+        while (!saveTask.IsCompleted)
+            yield return null;
+            
         SceneLoader.LoadScene("Defeat");
     }
 
+    IEnumerator SaveHighScoreIfNeeded()
+    {
+        var task = CloudSaveSystem.SaveScoreAsync(Points.Instance.score);
+        while (!task.IsCompleted)
+            yield return null;
+    }
+
+    IEnumerator ShowDefeatHUD()
+    {
+        int score = Points.Instance.score;
+        
+        var saveTask = CloudSaveSystem.SaveScoreAsync(score);
+        while (!saveTask.IsCompleted)
+            yield return null;
+
+        var loadTask = CloudSaveSystem.LoadHighScoreAsync();
+        while (!loadTask.IsCompleted)
+            yield return null;
+
+        int highScore = loadTask.Result;
+    }
 }
