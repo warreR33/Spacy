@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class EnemySet
+{
+    public int level;
+    public List<GameObject> enemies;
+}
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Grid Reference")]
@@ -17,16 +24,32 @@ public class EnemySpawner : MonoBehaviour
     public FormationType formationType = FormationType.Random;
 
     private Coroutine spawnCoroutine; 
+    public List<BaseEnemy> activeEnemies = new List<BaseEnemy>();
+
+    [Header("Enemy Sets por Nivel")]
+    public List<EnemySet> enemySets;
+
+    private Dictionary<int, List<GameObject>> enemyPrefabsByLevel = new Dictionary<int, List<GameObject>>();
+
+    public delegate void WaveClearedHandler();
+    public event WaveClearedHandler OnWaveCleared;
 
     private void Start()
     {
-        spawnCoroutine = StartCoroutine(SpawnWaves()); 
+        foreach (var set in enemySets)
+        {
+            if (!enemyPrefabsByLevel.ContainsKey(set.level))
+            {
+                enemyPrefabsByLevel[set.level] = set.enemies;
+            }
+        }
     }
 
     public IEnumerator SpawnWaves()
     {
         while (true)
         {
+            yield return new WaitForSeconds(2f);
             SpawnEnemyGroup();
             yield return new WaitForSeconds(spawnInterval);
         }
@@ -34,8 +57,12 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemyGroup()
     {
-        if (GameProgressManager.Instance == null || GameProgressManager.Instance.currentState != GameState.OnLevel)
+        if (GameProgressManager.Instance == null)
         return;
+
+        if (GameProgressManager.Instance.currentState != GameState.OnLevel &&
+            GameProgressManager.Instance.currentState != GameState.Tutorial)
+            return;
 
         int count = Random.Range(minEnemiesPerWave, maxEnemiesPerWave + 1);
         Vector2Int gridSize = new Vector2Int(gridManager.gridWidth, gridManager.gridHeight);
@@ -45,7 +72,13 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (var cell in spawnCells)
         {
-            GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+            int level = GameProgressManager.Instance?.currentLevel ?? 0;
+            if (!enemyPrefabsByLevel.ContainsKey(level)) return;
+
+            List<GameObject> currentList = enemyPrefabsByLevel[level];
+            if (currentList == null || currentList.Count == 0) return;
+
+            GameObject prefab = currentList[Random.Range(0, currentList.Count)];
             BaseEnemy tempEnemy = prefab.GetComponent<BaseEnemy>();
             if (tempEnemy == null) continue;
 
@@ -64,7 +97,22 @@ public class EnemySpawner : MonoBehaviour
             {
                 enemyScript.AssignCells(gridManager, cell);
                 enemyScript.Initialize(targetPosition);
+
+                activeEnemies.Add(enemyScript);
+                enemyScript.OnEnemyDied += HandleEnemyDeath;
             }
+        }
+
+        
+    }
+
+    private void HandleEnemyDeath(BaseEnemy enemy)
+    {
+        activeEnemies.Remove(enemy);
+
+        if (activeEnemies.Count == 0)
+        {
+            OnWaveCleared?.Invoke();
         }
     }
 
@@ -75,16 +123,13 @@ public class EnemySpawner : MonoBehaviour
         float camHeight = 2f * Camera.main.orthographicSize;
         float camWidth = camHeight * Camera.main.aspect;
 
-        int edge = Random.Range(0, 4);
+        int edge = Random.Range(0, 3);
         Vector2 pos = Vector2.zero;
 
         switch (edge)
         {
             case 0: // arriba
                 pos = new Vector2(Random.Range(camPos.x - camWidth / 2, camPos.x + camWidth / 2), camPos.y + camHeight / 2 + offset);
-                break;
-            case 1: // abajo
-                pos = new Vector2(Random.Range(camPos.x - camWidth / 2, camPos.x + camWidth / 2), camPos.y - camHeight / 2 - offset);
                 break;
             case 2: // izquierda
                 pos = new Vector2(camPos.x - camWidth / 2 - offset, Random.Range(camPos.y - camHeight / 2, camPos.y + camHeight / 2));
@@ -95,5 +140,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return pos;
+    }
+
+
+    public void SpawnSingleWave()
+    {
+        SpawnEnemyGroup(); 
     }
 }

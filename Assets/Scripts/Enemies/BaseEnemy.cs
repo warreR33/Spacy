@@ -65,6 +65,9 @@ public class BaseEnemy : MonoBehaviour
 
     private Vector3 originalLocalPos;
 
+    public delegate void EnemyDiedHandler(BaseEnemy enemy);
+    public event EnemyDiedHandler OnEnemyDied;
+
     public void Initialize(Vector3 target, bool shoot = false)
     {
         targetPosition = target;
@@ -172,6 +175,7 @@ public class BaseEnemy : MonoBehaviour
 
     public void OnDeathAnimationFinished()
     {
+        OnEnemyDied?.Invoke(this);
         Destroy(gameObject);
     }
 

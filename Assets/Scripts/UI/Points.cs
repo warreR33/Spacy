@@ -57,4 +57,11 @@ public class Points : MonoBehaviour
             scoreText.text = $"{score}";
         }
     }
+
+    public void ResetScore()
+    {
+        score = 0;
+        UpdateScoreUI();
+    }
+    
 }

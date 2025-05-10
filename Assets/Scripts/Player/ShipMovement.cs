@@ -16,6 +16,7 @@ public class ShipMovement : MonoBehaviour
     private Vector2 lastTouchPosition;
     private Vector2 dragDelta;
     private bool isDragging = false;
+    private bool hasMoved = false;
 
     private Rigidbody2D rb;
     private Camera mainCamera;
@@ -118,9 +119,9 @@ public class ShipMovement : MonoBehaviour
 
         rb.velocity = Vector2.Lerp(rb.velocity, movement, Time.fixedDeltaTime * moveSpeed);
 
-        if ((Vector2)transform.position != previousPosition)
+        if (!hasMoved && (keyboardInput != Vector2.zero || dragDelta != Vector2.zero))
         {
-            previousPosition = transform.position;
+            hasMoved = true; // nueva variable local en ShipMovement
             OnShipMoved?.Invoke();
         }
 

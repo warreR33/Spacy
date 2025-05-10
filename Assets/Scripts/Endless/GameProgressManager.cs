@@ -75,6 +75,11 @@ public class GameProgressManager : MonoBehaviour
 
         OnCompleteTransition?.Invoke(); 
         OnLevelChanged?.Invoke(currentLevel);
+
+        if (!isInTutorial && currentLevel == 0 && enemySpawner != null)
+        {
+            StartCoroutine(enemySpawner.SpawnWaves());
+        }
     }
 
     public void StartTutorial()
@@ -90,15 +95,12 @@ public class GameProgressManager : MonoBehaviour
     public void CompleteTutorial()
     {
         isInTutorial = false;
-        currentState = GameState.OnLevel;
-        currentLevel = 0; 
+        Points.Instance?.ResetScore();
 
-        if (enemySpawner != null)
-        {
-            StartCoroutine(enemySpawner.SpawnWaves()); 
-        }
+        currentLevel = 0;
+        
 
-        OnCompleteTransition?.Invoke(); 
+        StartTransition();
         //OnLevelChanged?.Invoke(currentLevel);
     }
 }

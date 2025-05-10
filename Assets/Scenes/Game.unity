@@ -1222,6 +1222,7 @@ MonoBehaviour:
   weaponButtonsGroup: {fileID: 1028178362}
   waitAfterMove: 2
   hasEquippedWeapon: 0
+  enemySpawner: {fileID: 613195220}
 --- !u!4 &530010430
 Transform:
   m_ObjectHideFlags: 0
@@ -1402,14 +1403,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 304796843}
   enemyPrefabs:
-  - {fileID: 7988867924957658279, guid: dda23a329191b7f448def7b6a4c2a576, type: 3}
-  - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
-  - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
-  - {fileID: 7988867924957658279, guid: f1466b51d9523f04d8b1a8c2f875f343, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spawnInterval: 15
   minEnemiesPerWave: 2
   maxEnemiesPerWave: 6
   formationType: 0
+  activeEnemies: []
+  enemySets:
+  - level: 0
+    enemies:
+    - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
+    - {fileID: 7988867924957658279, guid: dda23a329191b7f448def7b6a4c2a576, type: 3}
+  - level: 0
+    enemies:
+    - {fileID: 7988867924957658279, guid: dda23a329191b7f448def7b6a4c2a576, type: 3}
+    - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
+    - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
+  - level: 0
+    enemies:
+    - {fileID: 7988867924957658279, guid: dda23a329191b7f448def7b6a4c2a576, type: 3}
+    - {fileID: 7988867924957658279, guid: f1466b51d9523f04d8b1a8c2f875f343, type: 3}
+    - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
+    - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
+  - level: 0
+    enemies:
+    - {fileID: 7988867924957658279, guid: e6a169d28dd7c9e4092ffc4dc7f879ab, type: 3}
+    - {fileID: 7988867924957658279, guid: dda23a329191b7f448def7b6a4c2a576, type: 3}
+    - {fileID: 7988867924957658279, guid: f1466b51d9523f04d8b1a8c2f875f343, type: 3}
+    - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
+  - level: 0
+    enemies:
+    - {fileID: 7988867924957658279, guid: 63643cf9920b5454fa7278f7b04855b0, type: 3}
+    - {fileID: 7988867924957658279, guid: e6a169d28dd7c9e4092ffc4dc7f879ab, type: 3}
+    - {fileID: 7988867924957658279, guid: f1466b51d9523f04d8b1a8c2f875f343, type: 3}
+    - {fileID: 7988867924957658279, guid: dda23a329191b7f448def7b6a4c2a576, type: 3}
+    - {fileID: 7988867924957658279, guid: 2e837054e42200d4abaa5e9db0048610, type: 3}
+    - {fileID: 7988867924957658279, guid: 585be7d259f5dca4eafb6f7e10c33354, type: 3}
 --- !u!4 &613195221
 Transform:
   m_ObjectHideFlags: 0

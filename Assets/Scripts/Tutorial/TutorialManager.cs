@@ -18,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     public float waitAfterMove = 2f;
     public bool hasEquippedWeapon;
 
+    public EnemySpawner enemySpawner;
     private bool hasMoved = false;
     private Coroutine blinkCoroutine;
     private SpriteRenderer playerSprite;
@@ -143,8 +144,35 @@ public class TutorialManager : MonoBehaviour
 
         hasEquippedWeapon = true;
         weaponButtonsGroup.SetActive(false); 
-        StartCoroutine(FadeOutText()); 
+        StartCoroutine(HandleEnemyTutorialPhase());
+        FadeOutText();
         
+    }
+
+    private IEnumerator HandleEnemyTutorialPhase()
+    {
+
+        tutorialText.text = "¡Defeat all the ships!";
+        yield return FadeInText();
+        Debug.Log("Enemies");
+        yield return FadeOutText();
+        enemySpawner.OnWaveCleared += HandleWaveCleared;
+        enemySpawner.SpawnSingleWave();
+    }
+
+    private void HandleWaveCleared()
+    {
+        enemySpawner.OnWaveCleared -= HandleWaveCleared;
+        StartCoroutine(HandleTutorialComplete());
+    }
+
+    private IEnumerator HandleTutorialComplete()
+    {
+        tutorialText.text = "¡Well Done!";
+        yield return FadeInText();
+        
+        yield return FadeOutText();
+
         GameProgressManager.Instance.CompleteTutorial();
     }
 }
