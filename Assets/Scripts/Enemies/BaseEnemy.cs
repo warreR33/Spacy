@@ -61,6 +61,10 @@ public class BaseEnemy : MonoBehaviour
 
     private Coroutine damageFlashCoroutine;
 
+    private Color originalColor;
+
+    private Vector3 originalLocalPos;
+
     public void Initialize(Vector3 target, bool shoot = false)
     {
         targetPosition = target;
@@ -70,6 +74,8 @@ public class BaseEnemy : MonoBehaviour
 
     void Start()
     {
+        originalColor = render.color;
+
         healthSystem.OnHealthChanged += (current, max) =>
         {
             if (!healthSystem.IsDead && current < max)
@@ -143,7 +149,17 @@ public class BaseEnemy : MonoBehaviour
         Points.Instance.AddPoints(pointsOnDeath);
         OnDeath?.Invoke();
 
-        if (enemyCollider != null) enemyCollider.enabled = false;
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
+            damageFlashCoroutine = null;
+        }
+
+        if (render != null)
+            render.color = Color.white;
+
+        if (enemyCollider != null)
+            enemyCollider.enabled = false;
 
         if (deathClip != null)
             audioSource.PlayOneShot(deathClip);
@@ -151,7 +167,7 @@ public class BaseEnemy : MonoBehaviour
         if (animator != null)
             animator.SetTrigger("Die");
         else
-            Destroy(gameObject); 
+            Destroy(gameObject);
     }
 
     public void OnDeathAnimationFinished()
@@ -181,9 +197,6 @@ public class BaseEnemy : MonoBehaviour
 
     private IEnumerator FlashRed()
     {
-        Color originalColor = render.color;
-        Vector3 originalLocalPos = visualTransform.localPosition;
-
         float duration = 0.1f;
         float elapsed = 0f;
         float magnitude = 0.05f;

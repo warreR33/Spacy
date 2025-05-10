@@ -2125,7 +2125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9168f67b04ec6847b1070ea9e62df48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 8
+  dragThreshold: 1
+  dragSensitivity: 0.3
   startPosition: {fileID: 632572735}
 --- !u!82 &904477366
 AudioSource:
@@ -2147,7 +2149,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.1558205
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -4308,7 +4310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336efafbca5f91147bd28c2bedd480ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionSpeed: 1
+  transitionSpeed: 2
 --- !u!212 &1856423828
 SpriteRenderer:
   m_ObjectHideFlags: 0

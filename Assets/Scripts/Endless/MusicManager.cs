@@ -125,17 +125,19 @@ public class MusicManager : MonoBehaviour
             yield break; 
         }
 
+        float targetValue = 0.1f;
+
         audioSource.volume = 0f;
         audioSource.loop = true;
         audioSource.Play();
 
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            audioSource.volume = Mathf.Lerp(0f, 1f, t / fadeDuration);
+            audioSource.volume = Mathf.Lerp(0f, targetValue, t / fadeDuration);
             yield return null;
         }
 
-        audioSource.volume = 0.1f;
+        audioSource.volume = targetValue;
     }
 
     private void OnDestroy()

@@ -99,6 +99,6 @@ public class GameProgressManager : MonoBehaviour
         }
 
         OnCompleteTransition?.Invoke(); 
-        OnLevelChanged?.Invoke(currentLevel);
+        //OnLevelChanged?.Invoke(currentLevel);
     }
 }
