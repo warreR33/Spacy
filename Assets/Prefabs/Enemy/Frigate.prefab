@@ -302,6 +302,11 @@ MonoBehaviour:
   deathClip: {fileID: 8300000, guid: 4cc54840550980541ae4f391723132fc, type: 3}
   animator: {fileID: 6937634065162966764}
   visualTransform: {fileID: 767762403111076305}
+  weaponPickupPrefabs:
+  - {fileID: 8074859993337667098, guid: e1814ffc4808e334c9c250e77bbcd8b6, type: 3}
+  - {fileID: 5990153744071249075, guid: 7b23a365b47d3664883da094975c5f61, type: 3}
+  - {fileID: 3420884355019819988, guid: ce5a43c46bc906643bed94a8dea43beb, type: 3}
+  dropChance: 0.5
   render: {fileID: 4770140080250722716}
   enemyCollider: {fileID: 8040762764207508638}
 --- !u!114 &7698594265405275945

@@ -56,6 +56,10 @@ public class BaseEnemy : MonoBehaviour
     public Animator animator;
     public Transform visualTransform;
 
+    [Header("Loot")]
+    public List<GameObject> weaponPickupPrefabs;
+    public float dropChance = 0.05f;
+
     public SpriteRenderer render;
     public Collider2D enemyCollider;
 
@@ -67,6 +71,8 @@ public class BaseEnemy : MonoBehaviour
 
     public delegate void EnemyDiedHandler(BaseEnemy enemy);
     public event EnemyDiedHandler OnEnemyDied;
+
+
 
     public void Initialize(Vector3 target, bool shoot = false)
     {
@@ -151,6 +157,13 @@ public class BaseEnemy : MonoBehaviour
     {
         Points.Instance.AddPoints(pointsOnDeath);
         OnDeath?.Invoke();
+
+        if (weaponPickupPrefabs != null && weaponPickupPrefabs.Count > 0 && Random.value <= dropChance)
+        {
+            int index = Random.Range(0, weaponPickupPrefabs.Count);
+            GameObject chosenPickup = weaponPickupPrefabs[index];
+            Instantiate(chosenPickup, transform.position, Quaternion.identity);
+        }
 
         if (damageFlashCoroutine != null)
         {

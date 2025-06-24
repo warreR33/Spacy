@@ -18,6 +18,10 @@ public class TutorialManager : MonoBehaviour
     public float waitAfterMove = 2f;
     public bool hasEquippedWeapon;
 
+    [Header("Weapon Pickup System")]
+    public List<GameObject> weaponPickupPrefabs; 
+    public Transform weaponSpawnPoint; 
+
     public EnemySpawner enemySpawner;
     private bool hasMoved = false;
     private Coroutine blinkCoroutine;
@@ -76,13 +80,27 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator TransitionToWeaponSelection()
     {
         yield return FadeOutText();
-
         yield return new WaitForSeconds(waitAfterMove);
 
-        tutorialText.text = "¡Pick a weapon!";
+        tutorialText.text = "¡Pick up the weapon!";
         yield return FadeInText();
 
-        weaponButtonsGroup.SetActive(true); 
+        SpawnWeaponPickup();
+    }
+
+    private void SpawnWeaponPickup()
+    {
+        if (weaponPickupPrefabs.Count == 0 || weaponSpawnPoint == null)
+        {
+            Debug.LogWarning("No hay pickups o punto de spawn asignado.");
+            return;
+        }
+
+        // Elegimos uno aleatorio
+        int index = Random.Range(0, weaponPickupPrefabs.Count);
+        GameObject selectedPickup = weaponPickupPrefabs[index];
+
+        Instantiate(selectedPickup, weaponSpawnPoint.position, Quaternion.identity);
     }
 
     private IEnumerator FadeOutText()

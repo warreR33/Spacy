@@ -44,6 +44,15 @@ public class GameProgressManager : MonoBehaviour
         if (isInTutorial) return; 
 
         int newLevel = totalPoints / pointsPerLevel;
+
+        if (newLevel >= 5)
+        {
+            currentLevel = 0; 
+            StartTransition();
+            Debug.Log("Progreso reiniciado: vuelta al nivel 1");
+            return;
+        }
+
         if (newLevel > currentLevel && currentState == GameState.OnLevel)
         {
             currentLevel = newLevel;

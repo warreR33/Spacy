@@ -16,6 +16,8 @@ public class HealthSystem : MonoBehaviour
     public float shieldRechargeRate = 10f;
     public bool useShield;
 
+    private BaseShield customShield;
+
     [Header("Optional Callbacks")]
     public Action<int, int> OnHealthChanged;
     public Action<float, float, bool> OnShieldChanged;
@@ -43,6 +45,13 @@ public class HealthSystem : MonoBehaviour
     private void Update()
     {
         RechargeShield();
+        customShield?.UpdateShield();
+    }
+
+    public void AttachShield(BaseShield shield)
+    {
+        customShield = shield;
+        customShield.ApplyTo(this);
     }
 
     public void TakeDamage(int amount)
@@ -54,8 +63,12 @@ public class HealthSystem : MonoBehaviour
             shieldActive = false;
             shieldCharge = 0f;
             OnShieldChanged?.Invoke(shieldCharge, maxShieldCharge, shieldActive);
+            customShield?.OnShieldBroken();
+            customShield?.OnDamageBlocked();
             return;
         }
+
+        customShield?.OnDamageTakenWhileShieldDown();
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(0, currentHealth);

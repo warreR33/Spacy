@@ -10,6 +10,9 @@ public class RocketProjectile : MonoBehaviour
     private Transform target;
     private string targetTag;
 
+    private float targetSearchInterval = 0.2f;
+    private float searchTimer = 0f;
+
     public void SetDamage(int dmg)
     {
         damage = dmg;
@@ -24,8 +27,15 @@ public class RocketProjectile : MonoBehaviour
     void Update()
     {
         if (target == null)
-        {
-            Destroy(gameObject); 
+            {
+                searchTimer += Time.deltaTime;
+                if (searchTimer >= targetSearchInterval)
+                {
+                searchTimer = 0f;
+                target = FindClosestTarget();
+            }
+
+            transform.Translate(Vector2.up * speed * Time.deltaTime);
             return;
         }
 
@@ -37,6 +47,7 @@ public class RocketProjectile : MonoBehaviour
 
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
+
 
     Transform FindClosestTarget()
     {

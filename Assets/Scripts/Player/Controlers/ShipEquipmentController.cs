@@ -14,24 +14,47 @@ public class ShipEquipmentController : MonoBehaviour
     public bool EquipWeapon(BaseWeapon newWeapon)
     {
         if (newWeapon == null)
-            {
-                Debug.LogWarning("No se encontró componente BaseWeapon en el prefab instanciado.");
-                return false;
-            }
+        {
+            Debug.LogWarning("No se encontró componente BaseWeapon en el prefab instanciado.");
+            return false;
+        }
 
-            if (equippedWeapons.Count >= maxWeapons)
-            {
-                Debug.Log("Ya se alcanzó el máximo de armas.");
-                return false;
-            }
-
+        if (equippedWeapons.Count == 0)
+        {
+            // Primer arma, se equipa en slot 0
             equippedWeapons.Add(newWeapon);
             newWeapon.transform.SetParent(transform);
             newWeapon.transform.localPosition = Vector3.zero;
-
-            Debug.Log("Arma equipada correctamente: " + newWeapon.name);
-            Debug.Log("Cantidad total de armas: " + equippedWeapons.Count);
+            Debug.Log("Primer arma equipada en slot 0: " + newWeapon.name);
             return true;
+        }
+        else if (equippedWeapons.Count == 1)
+        {
+            // Segunda arma, va a slot 1
+            equippedWeapons.Add(newWeapon);
+            newWeapon.transform.SetParent(transform);
+            newWeapon.transform.localPosition = Vector3.zero;
+            Debug.Log("Arma equipada en slot 1: " + newWeapon.name);
+            return true;
+        }
+        else if (equippedWeapons.Count == 2)
+        {
+            // Ya hay 2 armas, reemplazamos el arma en slot 1 (índice 1)
+            BaseWeapon weaponToRemove = equippedWeapons[1];
+            UnequipWeapon(weaponToRemove);
+
+            equippedWeapons.Insert(1, newWeapon); // Insertar en slot 1
+            if (equippedWeapons.Count > 2)
+                equippedWeapons.RemoveAt(2); // Asegurar que solo haya 2
+
+            newWeapon.transform.SetParent(transform);
+            newWeapon.transform.localPosition = Vector3.zero;
+
+            Debug.Log("Arma reemplazada en slot 1: " + newWeapon.name);
+            return true;
+        }
+
+        return false;
     }
 
     public void UnequipWeapon(BaseWeapon weapon)

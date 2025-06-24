@@ -265,7 +265,7 @@ TextureImporter:
         width: 128
         height: 94
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -273,6 +273,90 @@ TextureImporter:
       bones: []
       spriteID: 8f99692b7cc3e274abbec1b964525368
       internalID: 1905722643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CelestialObjects_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 35
+        width: 30
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a44bbf1c47bd5284dbc8a1994951c626
+      internalID: 1342512051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CelestialObjects_9
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 33
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf5f1f3b412fb7643b34c77058ecf8c7
+      internalID: -1575805238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CelestialObjects_10
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 33
+        width: 31
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebe0a478bb296994e88ddf09f525aa82
+      internalID: -733726508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CelestialObjects_11
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 33
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2958471c60d79ab418ad245a79df43dd
+      internalID: 1488957134
       vertices: []
       indices: 
       edges: []
@@ -290,12 +374,16 @@ TextureImporter:
     nameFileIdTable:
       CelestialObjects_0: 1759889411
       CelestialObjects_1: 377880381
+      CelestialObjects_10: -733726508
+      CelestialObjects_11: 1488957134
       CelestialObjects_2: 1683053710
       CelestialObjects_3: 357512166
       CelestialObjects_4: 896922596
       CelestialObjects_5: 1044703588
       CelestialObjects_6: 494086310
       CelestialObjects_7: 1905722643
+      CelestialObjects_8: 1342512051
+      CelestialObjects_9: -1575805238
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

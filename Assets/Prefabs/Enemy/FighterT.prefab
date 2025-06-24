@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 8040762764207508638}
   - component: {fileID: 6045620735443289121}
   m_Layer: 0
-  m_Name: Fighter
+  m_Name: FighterT
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,10 +356,7 @@ MonoBehaviour:
   deathClip: {fileID: 8300000, guid: 4cc54840550980541ae4f391723132fc, type: 3}
   animator: {fileID: 8335564526510322857}
   visualTransform: {fileID: 141142408363829889}
-  weaponPickupPrefabs:
-  - {fileID: 8074859993337667098, guid: e1814ffc4808e334c9c250e77bbcd8b6, type: 3}
-  - {fileID: 5990153744071249075, guid: 7b23a365b47d3664883da094975c5f61, type: 3}
-  - {fileID: 3420884355019819988, guid: ce5a43c46bc906643bed94a8dea43beb, type: 3}
+  weaponPickupPrefabs: []
   dropChance: 0.5
   render: {fileID: 8910688819713266631}
   enemyCollider: {fileID: 8040762764207508638}

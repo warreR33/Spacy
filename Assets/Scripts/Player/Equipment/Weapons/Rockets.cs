@@ -8,7 +8,17 @@ public class Rockets : BaseWeapon
 
     public override void Shoot()
     {
-        if (shootPoints.Length == 0) return;
+        if (shootPoints.Length == 0)
+        {
+            Debug.LogWarning("No hay puntos de disparo asignados.");
+            return;
+        }
+
+        if (projectilePrefab == null)
+        {
+            Debug.LogError("El prefab del proyectil no está asignado en Rockets.");
+            return;
+        }
         
         Transform shootPoint = shootPoints[currentShootIndex];
         currentShootIndex = (currentShootIndex + 1) % shootPoints.Length;
