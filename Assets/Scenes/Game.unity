@@ -3371,7 +3371,7 @@ MonoBehaviour:
   enemySpawner: {fileID: 613195220}
   currentState: 2
   currentLevel: 0
-  pointsPerLevel: 100
+  pointsPerLevel: 500
   isInTutorial: 1
 --- !u!4 &913757421
 Transform:
